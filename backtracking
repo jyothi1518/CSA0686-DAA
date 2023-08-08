@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <stdbool.h>
+int subset[100];
+void print_subset(int n) {
+  printf("{");
+  for (int i = 0; i < n; i++) {
+    printf("%d", subset[i]);
+    if (i < n - 1) {
+      printf(", ");
+    }
+  }
+  printf("}\n");
+}
+void sum_of_subsets(int s[], int n, int k, int sum, int target) {
+  if (sum == target) {
+    print_subset(k);
+    return;
+  }
+  if (sum > target || n == 0) {
+    return;
+  }
+  subset[k] = s[n - 1];
+  sum_of_subsets(s, n - 1, k + 1, sum + s[n - 1], target);
+  sum_of_subsets(s, n - 1, k, sum, target);
+}
+
+int main() {
+  int s[] = {6, 2,8,1,5};
+  int n = sizeof(s) / sizeof(s[0]);
+
+  int target = 9;
+
+  printf("The subsets that sum up to %d are:\n", target);
+  sum_of_subsets(s, n, 0, 0, target);
+
+  return 0;
+}
+
+
+
+
+OUTPUT:
+The subsets that sum up to 9 are:
+{1, 8}
+{1, 2, 6}
