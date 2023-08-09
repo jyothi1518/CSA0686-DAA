@@ -10,12 +10,17 @@ int binomialCoeff(int n, int k)
 }
 int main()
 {
-    int n = 8, k = 8;
-    printf("Value of C(%d, %d) is %d ", n, k,
+int n,k;
+    printf("enter n value:");
+    scanf("%d",&n);
+    printf("enter k value:");
+    scanf("%d",&k);
+	    printf("Value of C(%d, %d) is %d ", n, k,
            binomialCoeff(n, k));
 }
 
 
-
 OUTPUT:
+enter n value:8
+enter k value:8
 Value of C(8, 8) is 1
