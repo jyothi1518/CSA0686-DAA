@@ -1,23 +1,47 @@
-int main()
+#include <stdio.h>
+#include <stdlib.h>
+int reverse(int n)
 {
-int n, rev = 0, rem;
-printf(“\nEnter a number : “);
-scanf(“%d”, &n);
-printf(“\nReversed Number : “);
-while(n != 0)
-{
-rem = n%10;
-rev = rev*10 + rem;
-n /= 10;
+    int rev = 0;
+    while (n > 0)
+    {
+        rev = rev * 10 + n % 10;
+        n = n / 10;
+    }
+    return rev;
 }
 
-printf(“%d\n”, rev);
+int is_valid(char *input)
+{
+    for (int i = 0; input[i] != '\0'; i++)
+    {
+        if (input[i] < '0' || input[i] > '9')
+            return 0;
+    }
+    return 1;
+}
+int main()
+{
+    char input[100];
 
-return 0;
+    printf("Enter a number: ");
+
+    scanf("%s", input);
+    if (is_valid(input))
+    {
+        int n = atoi(input);
+
+        printf("The reverse of %d is %d\n", n, reverse(n));
+    }
+    else
+    {
+        printf("Illegal input\n");
+    }
+    return 0;
 }
 
 
 
 OUTPUT:
-Enter an integer: 1234
-Reversed number = 4321
+Enter a number: 12a4s5
+Illegal input
