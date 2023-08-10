@@ -1,52 +1,68 @@
-#include<stdio.h>
-int max(int a, int b) { return (a > b)? a : b; }
-int knapSack(int W, int wt[], int val[], int n)
-{
-   int i, w;
-   int K[n+1][W+1];
-   for (i = 0; i <= n; i++)
-   {
-       for (w = 0; w <= W; w++)
-       {
-           if (i==0 || w==0)
-               K[i][w] = 0;
-           else if (wt[i-1] <= w)
-                 K[i][w] = max(val[i-1] + K[i-1][w-wt[i-1]],  K[i-1][w]);
-           else
-                 K[i][w] = K[i-1][w];
-       }
-   }
-   return K[n][W];
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Item {
+    int w;
+    int v;
+};
+
+int compare(const void *a, const void *b) {
+    struct Item *i1 = (struct Item *)a;
+    struct Item *i2 = (struct Item *)b;
+    double r1 = (double)i1->v / i1->w;
+    double r2 = (double)i2->v / i2->w;
+    return (r1 < r2) ? 1 : (r1 > r2) ? -1 : 0;
 }
-int main()
-{
-    int i, n, val[20], wt[20], W;
-    
-    printf("Enter number of items:");
+
+double knapsackGreedy(int cap, struct Item items[], int n) {
+    qsort(items, n, sizeof(struct Item), compare);
+
+    int cw = 0;
+    double tv = 0.0;
+
+    for (int i = 0; i < n; i++) {
+        if (cw + items[i].w <= cap) {
+            cw += items[i].w;
+            tv += items[i].v;
+        } else {
+            int rw = cap - cw;
+            tv += (double)rw * items[i].v / items[i].w;
+            break;
+        }
+    }
+
+    return tv;
+}
+
+int main() {
+    int cap, n;
+    printf("Enter capacity of knapsack: ");
+    scanf("%d", &cap);
+    printf("Enter number of items: ");
     scanf("%d", &n);
-    
-    printf("Enter value and weight of items:\n");
-    for(i = 0;i < n; ++i){
-     scanf("%d%d", &val[i], &wt[i]);
-     }
- 
-    printf("Enter size of knapsack:");
-    scanf("%d", &W);
-    
-    printf("%d", knapSack(W, wt, val, n));
+
+    struct Item items[n];
+    for (int i = 0; i < n; i++) {
+        printf("Enter weight and value of item %d: ", i + 1);
+        scanf("%d %d", &items[i].w, &items[i].v);
+    }
+
+    double maxVal = knapsackGreedy(cap, items, n);
+
+    printf("The maximum value that can be achieved in the knapsack is: %lf\n", maxVal);
     return 0;
 }
 
 
 
-
-
 OUTPUT:
-Enter number of items:4
-Enter value and weight of items:
-80 40
-70 30
-50 20
-80 30
-Enter size of knapsack:100
-230
+Enter capacity of knapsack: 24
+Enter number of items: 7
+Enter weight and value of item 1: 7 70
+Enter weight and value of item 2: 3 40
+Enter weight and value of item 3: 9 80
+Enter weight and value of item 4: 2 30
+Enter weight and value of item 5: 3 25
+Enter weight and value of item 6: 4 45
+Enter weight and value of item 7: 3 35
+The maximum value that can be achieved in the knapsack is: 264.444444
