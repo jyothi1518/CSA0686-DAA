@@ -38,19 +38,3 @@ if(n=1)
 printf("\nsuccessful.");
 else printf("target not found.");
 }
-
-
-
-OUTPUT:
-enter the no of elements:8
-enter the targeted element :5
-enter the array elements :45
-4
-23
--11
-20
-5
-10
-50
-target found at position a[2]
-successful.
