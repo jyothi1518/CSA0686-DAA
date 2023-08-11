@@ -1,47 +1,48 @@
 #include <stdio.h>
-int main()
-{
-    int array[100];
-    int i, n, x, pos;
-	printf("Enter the number of elements in the array \n");
-    scanf("%d", &n);
-    printf("Enter the elements \n");
-    for (i = 0; i < n; i++)
-    {
-        scanf("%d", &array[i]);
+#define MAX_SIZE 100
+int main() {
+    int list[MAX_SIZE];
+    int size, position, number;
+    printf("Enter the size of the list (maximum %d): ", MAX_SIZE);
+    scanf("%d", &size);
+    if (size <= 0 || size > MAX_SIZE) {
+        printf("Invalid list size. Exiting the program.\n");
+        return 1;
     }
-	printf("Input array elements are: \n");
-    for (i = 0; i < n; i++)
-    {
-        printf("%d ", array[i]);
+    printf("Enter the elements of the list:\n");
+    for (int i = 0; i < size; i++) {
+        scanf("%d", &list[i]);
     }
-    printf("\nEnter the new element to be inserted: ");
-    scanf("%d", &x);
-    printf("Enter the position where element is to be inserted: ");
-    scanf("%d", &pos);
-    n=n+1;
-    for(i = n-1; i >= pos; i--)
-        array[i]=array[i-1];
- array[pos-1]=x; 
-    for (i = 0; i < n; i++)
-    {
-        printf("%d ", array[i]);
+    printf("Enter the position to insert the number (0-based index):\n ");
+    scanf("%d", &position);
+    if (position < 0 || position > size) {
+        printf("Invalid position. Exiting the program.\n");
+        return 1;
     }
+    printf("Enter the number to insert: ");
+    scanf("%d", &number);    
+    for (int i = size; i > position; i--) {
+        list[i] = list[i - 1];
+    }
+    list[position] = number;
+    size++; 
+    printf("The list after insertion: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", list[i]);
+    }
+    printf("\n");
+    return 0;
 }
 
 
 
 OUTPUT:
-Enter the number of elements in the array
-5
-Enter the elements
-56
-34
+Enter the size of the list (maximum 100): 4
+Enter the elements of the list:
+12
 23
+34
 45
-78
-Input array elements are:
-56 34 23 45 78
-Enter the new element to be inserted: 32
-Enter the position where element is to be inserted: 3
-56 34 32 23 45 78
+Enter the position to insert the number (0-based index):
+ 6
+Invalid position. Exiting the program.
